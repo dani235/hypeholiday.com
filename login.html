@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Title-->
+        <title>Welcome back</title>
+        <!--IMG-->
+        <link href="img/logo_transparent.png" rel="icon">
+
+        <!--CSS Libraries-->
+        <link rel="stylesheet" href="css/account.css">
+        <link href="fontawesome/css/all.css" rel="stylesheet">
+
+        <!--Meta-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+         
+        <div class="container">
+            <header>Welcome back,</header>
+            
+            <div class="form-outer">
+               <form method="POST" action="login.php">
+                  <div class="page">
+                     <div class="title">
+                        Login:
+                     </div>
+                     <div class="field">
+                        <div class="label">
+                           Username:
+                        </div>
+                        <input type="text" name="username">
+                     </div>
+                     <div class="field">
+                        <div class="label">
+                           Password:
+                        </div>
+                        <input type="password" name="password">
+                     </div>
+                     <div class="field btns">
+                        <a href="signin.html" style="color: #fff; text-decoration: none;"><button class="prev-3 prev">My Account</a></button>
+                        <button class="submit" name="login_btn">Submit</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <p><a href="index.html" style="text-decoration: none;">Back Home</a></p>
+         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="js/account.js"></script>
+    </body>
+</html>

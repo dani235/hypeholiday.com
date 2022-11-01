@@ -1,0 +1,409 @@
+<html>
+    <head>
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+.profile-wrapper {
+  width: 375px;
+  height: fit-content;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+  margin: 0 auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid gainsboro;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.profile-info {
+  margin-top: 0.5rem;
+}
+
+.display-name {
+  font-size: 1.5rem;
+}
+
+.profile-stats {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70px;
+  cursor: pointer;
+}
+
+.profile-stat:hover strong {
+  color: royalblue;
+}
+
+.profile-controls {
+  margin-top: 1rem;
+}
+
+.stacked-button {
+  display: flex;
+  gap: 0.25rem;
+}
+
+button.follow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  height: 42px;
+  width: 164px;
+  transition: 
+    color 0.3s,
+    border 0.3s,
+    background-color 0.3s;
+  background-color: #1976D2;
+  color: white;
+  font-size: 0.95rem;
+  box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.2);
+}
+
+button.follow:not(.following):hover {
+  background-color: #1E88E5;
+  box-shadow: 0px 2px 8px 2px rgba(0,0,0,0.2);
+}
+
+button.follow:not(.following) .follow-text {
+  display: block;
+}
+
+button.follow:not(.following) .following-text {
+  display: none;
+}
+
+button.follow:not(.following) .unfollow-text {
+  display: none;
+}
+
+button.follow.following .follow-text {
+  display: none;
+}
+
+button.follow.following .following-text {
+  display: block;
+}
+
+button.follow.following .unfollow-text {
+  display: none;
+}
+
+button.follow.following {
+  transition: 
+    color 0.3s,
+    border 0.3s,
+    background-color 0.3s;
+  background-color: white;
+  border: 1px solid gainsboro;
+  color: #424242;
+  box-shadow: 0px 0.5px 4px 0.25px rgba(0,0,0,0.2);
+}
+
+button.follow.following:hover {
+  background-color: #D32F2F;
+  border: 0;
+  box-shadow: 0px 2px 8px 2px rgba(0,0,0,0.2);
+}
+
+button.follow.following:hover .following-text {
+  display: none;
+}
+
+button.follow.following:hover .unfollow-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: white;
+}
+
+button.follow-ext {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  appearance: none;
+  border: 1px solid gainsboro;
+  cursor: pointer;
+  height: 42px;
+  width: 42px;
+  background-color: white;
+  box-shadow: 0px 0.5px 4px 0.25px rgba(0,0,0,0.2);
+}
+
+button.follow-ext:hover {
+  box-shadow: 0px 0.5px 4px 0.5px rgba(0,0,0,0.2);
+}
+
+button.follow-ext:hover svg {
+  fill: royalblue;
+}
+
+.follow-ext-menu-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+}
+
+.follow-ext-menu {
+  position: absolute;
+  right: 0px;
+  width: 120px;
+  height: fit-content;
+  display: none;
+}
+
+.follow-ext-menu-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.follow-ext-menu-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  appearance: none;
+  color: #424242;
+  border-left: 1px solid gainsboro;
+  border-right: 1px solid gainsboro;
+  border-top: 1px solid gainsboro;
+  border-bottom: 1px solid gainsboro;
+  background-color: white;
+  height: 38px;
+}
+
+.follow-ext-menu-item:hover {
+  color: royalblue;
+}
+
+.follow-ext-menu-item:hover svg {
+  fill: royalblue;
+}
+
+.follow-ext-menu-item:not(:last-child) {
+  border-top: 1px solid gainsboro;
+}
+
+.profile-body {
+  padding: 1rem;
+}
+
+.profile-body-section {
+  display: grid;
+  grid-template-columns: 110px 110px 110px;
+  grid-column-gap: 6.5px;
+  grid-row-gap: 6.5px;
+}
+
+.profile-tabs {
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
+.profile-tab {
+  width: 50%;
+  appearance: none;
+  border: 0;
+  background-color: white;
+  cursor: pointer;
+}
+
+.profile-tab.selected {
+  transition: border-bottom 0.3s;
+  border-bottom: 2px solid royalblue;
+}
+
+.profile-tab.selected svg {
+  transition: fill 0.3s;
+  fill: royalblue;
+}
+
+.profile-tab:not(.selected) {
+  transition: border-bottom 0.3s;
+  border-bottom: 2px solid transparent;
+}
+
+.profile-tab:not(.selected) svg {
+  transition: fill 0.3s;
+  fill: grey;
+}
+
+</style>
+    </head>
+    <body>
+<div class="profile-wrapper">
+  <div class="profile-header">
+    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDM2ODA0NA&ixlib=rb-1.2.1&q=85" width="60" height="60" class="avatar" />
+    <div class="profile-info">
+      <h1 class="display-name">John Doe</h1>
+    </div>
+    <div class="profile-stats">
+      <div class="profile-stat">
+        <strong id="followingCount">243</strong>
+        <span>Following</span>
+      </div>
+      <div class="profile-stat">
+        <strong id="followerCount">56.7K</strong>
+        <span>Followers</span>
+      </div>
+      <div class="profile-stat">
+        <strong id="likeCount">4.22M</strong>
+        <span>Likes</span>
+      </div>
+    </div>
+    <div class="profile-controls">
+      <div class="stacked-button">
+        <button class="follow" id="following"><span class="follow-text">Follow</span><span class="following-text">Following</span><span class="unfollow-text"><svg viewBox="0 0 352 512" width="12" fill="white" title="times">
+  <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" />
+</svg>Unfollow</span></button>
+        <button class="follow-ext"><svg viewBox="0 0 320 512" width="10" title="caret-down" fill="#424242">
+            <path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" />
+          </svg></button>
+      </div>
+      <div class="follow-ext-menu-wrapper">
+        <div class="follow-ext-menu">
+          <div class="follow-ext-menu-inner">
+            <button class="follow-ext-menu-item"><svg viewBox="0 0 512 512" fill="#424242" width="16" title="share">
+                <path d="M503.691 189.836L327.687 37.851C312.281 24.546 288 35.347 288 56.015v80.053C127.371 137.907 0 170.1 0 322.326c0 61.441 39.581 122.309 83.333 154.132 13.653 9.931 33.111-2.533 28.077-18.631C66.066 312.814 132.917 274.316 288 272.085V360c0 20.7 24.3 31.453 39.687 18.164l176.004-152c11.071-9.562 11.086-26.753 0-36.328z" />
+              </svg>Share</button>
+            <button class="follow-ext-menu-item"><svg viewBox="0 0 640 512" fill="#424242" width="16" title="user-slash">
+                <path d="M633.8 458.1L362.3 248.3C412.1 230.7 448 183.8 448 128 448 57.3 390.7 0 320 0c-67.1 0-121.5 51.8-126.9 117.4L45.5 3.4C38.5-2 28.5-.8 23 6.2L3.4 31.4c-5.4 7-4.2 17 2.8 22.4l588.4 454.7c7 5.4 17 4.2 22.5-2.8l19.6-25.3c5.4-6.8 4.1-16.9-2.9-22.3zM96 422.4V464c0 26.5 21.5 48 48 48h350.2L207.4 290.3C144.2 301.3 96 356 96 422.4z" />
+              </svg>Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="profile-body">
+    <div class="profile-tabs">
+      <button class="profile-tab selected"><svg viewBox="0 0 576 512" width="24" title="images">
+          <path d="M480 416v16c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V176c0-26.51 21.49-48 48-48h16v208c0 44.112 35.888 80 80 80h336zm96-80V80c0-26.51-21.49-48-48-48H144c-26.51 0-48 21.49-48 48v256c0 26.51 21.49 48 48 48h384c26.51 0 48-21.49 48-48zM256 128c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-96 144l55.515-55.515c4.686-4.686 12.284-4.686 16.971 0L272 256l135.515-135.515c4.686-4.686 12.284-4.686 16.971 0L512 208v112H160v-48z" />
+        </svg></button>
+      <button class="profile-tab"><svg viewBox="0 0 512 512" width="24" title="th">
+          <path d="M149.333 56v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zm181.334 240v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm32-240v80c0 13.255 10.745 24 24 24H488c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24zm-32 80V56c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm-205.334 56H24c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24zM0 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm386.667-56H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zm0 160H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zM181.333 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24z" />
+        </svg></button>
+      <button class="profile-tab">
+        <svg viewBox="0 0 512 512" width="24" title="list">
+          <path d="M80 368H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm0-320H16A16 16 0 0 0 0 64v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16zm0 160H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm416 176H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z" />
+        </svg>
+      </button>
+    </div>
+    <div class="profile-body-section">
+      <img src="https://images.unsplash.com/photo-1638628281370-2d2b76686a4f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDM4NTAwMQ&ixlib=rb-1.2.1&q=85" width="110" />
+      <img src="https://images.unsplash.com/photo-1635110060340-097353a501c6?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDM4NTEwMQ&ixlib=rb-1.2.1&q=85" width="110" />
+      <img src="https://images.unsplash.com/photo-1639891906817-a24d436359bb?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDM4NTAwMQ&ixlib=rb-1.2.1&q=85" width="110" />
+      <img src="https://images.unsplash.com/photo-1639433506654-51d94fd9899e?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDM4NTE1Nw&ixlib=rb-1.2.1&q=85" width="110" />
+      <img src="https://images.unsplash.com/photo-1637781127773-5ce8c6d7638b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDM4NTUzMg&ixlib=rb-1.2.1&q=85" width="110" />
+      <img src="https://images.unsplash.com/photo-1639230464573-a1bae9ff0996?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDM4NTYyNg&ixlib=rb-1.2.1&q=85" width="110" />
+    </div>
+  </div>
+</div>
+<script>
+    let following = false;
+let extMenuActive = false;
+
+const stats = {
+  followerCount: 56799,
+  followingCount: 243,
+  likeCount: 4225246,
+}
+
+const numCommasToUnit = (numCommas) => {
+  switch (numCommas) {
+    case 0:
+      return '';
+    case 1:
+      return 'K';
+    case 2:
+      return 'M';
+    case 3:
+      return 'B';
+    case 4:
+      return 'T';
+    default:
+      return '';
+  }
+}
+
+const prettifyStat = (num) => {
+  const asInt = parseInt(num);//ensure stat isn't a float
+  const asStr = asInt.toString();
+  const numDigits = asStr.length;
+  const numCommas = parseInt((numDigits - 1) / 3);
+  const dotIndex = ((numDigits - 1) % 3) + 1;
+  if (numDigits > 3) {
+    const unit = numCommasToUnit(numCommas);
+    return `${asStr.slice(0, dotIndex)}.${asStr.slice(dotIndex, 3)}${unit}`;
+  }
+  return num;
+}
+
+const renderFollowing = () => {
+  if (following) {
+    $("#following").addClass("following");
+  } else {
+    $("#following").removeClass("following");
+  }
+}
+
+const renderStats = () => {
+  for (const key in stats) {
+    $(`#${key}`).text(prettifyStat(stats[key]));
+  }
+}
+
+$("body").on("click", "#following", function() {
+  following = !following;
+  if (following) {
+    stats['followerCount'] += 1;
+  } else {
+    stats['followerCount'] -= 1;
+  }
+  renderFollowing();
+  renderStats();
+});
+
+$("body").on("click", ".profile-tab:not(.selected)", function() {
+  $(".profile-tab").removeClass("selected");
+  $(this).addClass("selected");
+});
+
+$("body").on("click", ".follow-ext, .follow-ext-menu-item", function() {
+  extMenuActive = !extMenuActive;
+  if (extMenuActive) {
+    $(".follow-ext-menu").slideDown(200);
+  } else {
+    $(".follow-ext-menu").slideUp(200);
+  }
+});
+
+renderStats();
+</script>
+    </body>
+</html>
